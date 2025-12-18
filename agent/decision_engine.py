@@ -28,10 +28,14 @@ except Exception:
     Groq = None
 
 # sentence-transformers + faiss
+# In CI or lightweight environments, installing the full
+# sentence-transformers stack (with PyTorch) can be heavy or fail.
+# Instead of crashing import, we fall back to a tiny dummy encoder
+# so tests and non-ML environments can still run.
 try:
-    from sentence_transformers import SentenceTransformer
-except Exception as e:
-    raise RuntimeError("Please install sentence-transformers to use DecisionEngine") from e
+    from sentence_transformers import SentenceTransformer  # type: ignore
+except Exception:
+    SentenceTransformer = None  # type: ignore
 
 try:
     import faiss
@@ -99,13 +103,31 @@ def _load_routes_raw(data_dir: str = "data") -> Dict[str, Any]:
 class DecisionEngine:
     def __init__(self):
         # 1) Encoder: multilingual SentenceTransformer (configurable)
-        embed_name = getattr(settings, "EMBEDDING_MODEL", "all-MiniLM-L6-v2")
-        try:
-            self.encoder = SentenceTransformer(embed_name)
-        except Exception as e:
-            # fallback
-            print("Failed to load configured embedding model:", e)
-            self.encoder = SentenceTransformer("all-MiniLM-L6-v2")
+        # If the real library is unavailable (e.g. in CI), use a
+        # deterministic dummy encoder so the rest of the pipeline and
+        # tests can still run without heavy ML dependencies.
+        if SentenceTransformer is not None:
+            embed_name = getattr(settings, "EMBEDDING_MODEL", "all-MiniLM-L6-v2")
+            try:
+                self.encoder = SentenceTransformer(embed_name)
+            except Exception as e:
+                print("Failed to load configured embedding model:", e)
+                self.encoder = SentenceTransformer("all-MiniLM-L6-v2")
+        else:
+            print("sentence-transformers not available; using dummy encoder for DecisionEngine.")
+            class _DummyEncoder:
+                def encode(self, texts, convert_to_numpy=True, show_progress_bar=False):
+                    if isinstance(texts, str):
+                        texts = [texts]
+                    # simple deterministic hashing into a fixed-size vector
+                    vecs = []
+                    for t in texts:
+                        seed = abs(hash(t)) % (10 ** 6)
+                        rng = np.random.default_rng(seed)
+                        vecs.append(rng.standard_normal(384, dtype="float32"))
+                    arr = np.stack(vecs, axis=0)
+                    return arr
+            self.encoder = _DummyEncoder()
 
         # 2) Build RAG docs & in-memory embeddings (FAISS index optional)
         #    We always compute embeddings so we can measure similarity
