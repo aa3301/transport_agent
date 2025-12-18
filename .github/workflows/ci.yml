@@ -8,6 +8,19 @@ on:
 jobs:
   tests:
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: transport_db
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -22,9 +35,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Initialize database schema
+        env:
+          USE_DB: "true"
+          MYSQL_ASYNC_URL: "mysql+aiomysql://root:password@127.0.0.1:3306/transport_db"
+        run: |
+          python create_db_schema.py
+
       - name: Run tests (pytest)
         env:
-          USE_DB: "false"          # disable DB in CI to keep tests lightweight
-          MYSQL_ASYNC_URL: "disabled"  # ensures DB code paths fall back to in-memory
+          USE_DB: "true"
+          MYSQL_ASYNC_URL: "mysql+aiomysql://root:password@127.0.0.1:3306/transport_db"
         run: |
           pytest
