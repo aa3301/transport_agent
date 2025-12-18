@@ -15,10 +15,10 @@ redis==5.0.1
 aio-pika==9.0.5
 
 # AI/ML (LLM, embeddings, RAG)
- groq (optional) and sentence-transformers are large; install when needed
+# groq (optional) and sentence-transformers are large; install when needed
 sentence-transformers==2.2.2
- faiss-cpu often problematic on Windows; install via conda if needed
- faiss-cpu==1.7.4
+# faiss-cpu often problematic on Windows; install via conda if needed
+# faiss-cpu==1.7.4  # commented out by default; install manually if needed
 numpy==1.24.3
 
 # HTTP & async
