@@ -1,0 +1,47 @@
+{
+	"@comment": "Make stops close to bus positions so ETA is in minutes, not tens of hours.",
+	"R1": {
+		"stops": [
+			{
+				"stop_id": "S1",
+				"name": "Stop S1 - Office Gate (Kolkata)",
+				"lat": 22.5710,
+				"lon": 88.3610
+			},
+			{
+				"stop_id": "S2",
+				"name": "Stop S2 - Main Market (Kolkata North)",
+				"lat": 22.5800,
+				"lon": 88.3700
+			},
+			{
+				"stop_id": "S3",
+				"name": "Stop S3 - Railway Station (Howrah)",
+				"lat": 22.5950,
+				"lon": 88.2630
+			}
+		]
+	},
+	"R2": {
+		"stops": [
+			{
+				"stop_id": "S4",
+				"name": "Stop S4 - Tech Park (Mumbai East)",
+				"lat": 19.0760,
+				"lon": 72.8777
+			},
+			{
+				"stop_id": "S5",
+				"name": "Stop S5 - Airport Road (Navi Mumbai)",
+				"lat": 19.0970,
+				"lon": 73.0000
+			},
+			{
+				"stop_id": "S6",
+				"name": "Stop S6 - City Center (Pune)",
+				"lat": 18.5204,
+				"lon": 73.8567
+			}
+		]
+	}
+}

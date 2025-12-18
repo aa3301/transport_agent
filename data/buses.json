@@ -1,0 +1,27 @@
+{
+	"@comment": "Keep buses on the same region as their route stops so ETA is not thousands of km.",
+	"B1": {
+		"route_id": "R1",
+		"lat": 22.5700,
+		"lon": 87.3600,
+		"status": "on_time",
+		"status_message": "Running normally",
+		"speed_kmph": 25.0
+	},
+	"B2": {
+		"route_id": "R1",
+		"lat": 22.5750,
+		"lon": 87.3650,
+		"status": "on_time",
+		"status_message": "Running normally",
+		"speed_kmph": 22.0
+	},
+	"B3": {
+		"route_id": "R2",
+		"lat": 19.0760,
+		"lon": 72.8777,
+		"status": "on_time",
+		"status_message": "Running normally",
+		"speed_kmph": 30.0
+	}
+}

@@ -1,0 +1,54 @@
+# Core FastAPI & async
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.4.2
+pydantic-settings==2.0.3
+
+# Database
+sqlalchemy[asyncio]==2.0.23
+aiomysql==0.2.0
+alembic==1.12.1
+
+# Cache & Message Queue
+redis==5.0.1
+#aioredis==2.0.1
+aio-pika==9.0.5
+
+# AI/ML (LLM, embeddings, RAG)
+ groq (optional) and sentence-transformers are large; install when needed
+sentence-transformers==2.2.2
+ faiss-cpu often problematic on Windows; install via conda if needed
+ faiss-cpu==1.7.4
+numpy==1.24.3
+
+# HTTP & async
+httpx==0.25.1
+
+# gRPC (use a released version with available wheels)
+grpcio==1.76.0
+grpcio-tools==1.76.0
+
+# Kafka (event streaming)
+aiokafka==0.10.0
+
+# JWT & Auth (use a published version)
+pyjwt==2.10.1
+passlib[bcrypt]==1.7.4
+
+# Logging & monitoring
+python-json-logger==2.0.7
+structlog==23.2.0
+opentelemetry-api==1.17.0
+opentelemetry-sdk==1.17.0
+prometheus-client==0.16.0
+
+# Utils
+python-dotenv==1.0.0
+requests==2.31.0
+
+# Development & testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+black==23.12.0
+flake8==6.1.0
+mypy==1.7.1

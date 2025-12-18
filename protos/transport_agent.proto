@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package transport;
+
+// option python_package = "transport_proto";  <-- REMOVE THIS LINE
+
+// Fleet service: used for driver updates and status queries
+service FleetService {
+  rpc UpdateLocation(UpdateLocationRequest) returns (UpdateLocationResponse);
+  rpc UpdateStatus(UpdateStatusRequest) returns (UpdateStatusResponse);
+  rpc GetBusStatus(GetBusStatusRequest) returns (GetBusStatusResponse);
+  rpc FleetOverview(Empty) returns (FleetOverviewResponse);
+}
+
+service AgentService {
+  rpc Ask(AskRequest) returns (AskResponse);
+}
+
+message Empty {}
+
+message UpdateLocationRequest {
+  string bus_id = 1;
+  double lat = 2;
+  double lon = 3;
+  double speed_kmph = 4;
+}
+
+message UpdateLocationResponse {
+  bool ok = 1;
+  string message = 2;
+  map<string, string> bus = 3;
+}
+
+message UpdateStatusRequest {
+  string bus_id = 1;
+  string status = 2;
+  string message = 3;
+}
+
+message UpdateStatusResponse {
+  bool ok = 1;
+  string message = 2;
+}
+
+message GetBusStatusRequest {
+  string bus_id = 1;
+}
+
+message GetBusStatusResponse {
+  bool ok = 1;
+  map<string, string> status = 2;
+}
+
+// Define a message for bus info instead of repeated map
+message BusInfo {
+  string bus_id = 1;
+  string lat = 2;
+  string lon = 3;
+  string speed_kmph = 4;
+  string route_id = 5;
+  string status = 6;
+  string status_message = 7;
+}
+
+message FleetOverviewResponse {
+  bool ok = 1;
+  repeated BusInfo buses = 2;
+}
+
+message AskRequest {
+  string query = 1;
+}
+
+message AskResponse {
+  bool ok = 1;
+  string answer = 2;
+  string plan_json = 3;
+}
