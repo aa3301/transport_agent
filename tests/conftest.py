@@ -24,14 +24,14 @@ from microservices.auth_service_app import app as auth_app
 from microservices.agent_service_app import app as agent_app
 
 
-@pytest_asyncio.fixture(scope="session")
+@pytest_asyncio.fixture()
 async def auth_client():
     """Async test client for the Auth microservice."""
     async with AsyncClient(app=auth_app, base_url="http://testserver") as ac:
         yield ac
 
 
-@pytest_asyncio.fixture(scope="session")
+@pytest_asyncio.fixture()
 async def agent_client():
     """Async test client for the Agent microservice."""
     async with AsyncClient(app=agent_app, base_url="http://testserver") as ac:
