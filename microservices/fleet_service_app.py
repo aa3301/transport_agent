@@ -3,6 +3,7 @@ Fleet Microservice (standalone FastAPI app).
 
 Run:
 - uvicorn microservices.fleet_service_app:app --host 0.0.0.0 --port 8002
+hello
 """
 from fastapi import FastAPI
 from core.response import ok
