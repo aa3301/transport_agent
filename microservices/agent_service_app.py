@@ -5,6 +5,7 @@ Purpose:
 - Expose a clean /ask HTTP endpoint backed by the SupervisorAgent (Planner + tools + post-processing).
 - Provide subscription management & /notifications/recent for notifications.
 - Start the SupervisorAgent background loop (proactive notifications, health checks).
+hello
 """
 
 import asyncio
@@ -58,7 +59,7 @@ async def ask(payload: AskRequest):
 
     try:
         result = await supervisor.handle_user_query(payload.query)
-        if not result:
+        if not result:       
             logger.error("SupervisorAgent returned no result for query=%s", payload.query)
             raise HTTPException(status_code=500, detail="Agent failed to produce an answer")
 
