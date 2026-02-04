@@ -10,11 +10,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.0.0
         with:
-          host: 51.21.170.168
-          username: ec2-user
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            /usr/local/bin/deploy.sh
+            cd /home/ec2-user/transport_agent
+            git pull origin main
+
+            sudo systemctl restart auth
+            sudo systemctl restart fleet
