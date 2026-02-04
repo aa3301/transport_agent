@@ -1,12 +1,26 @@
-- name: Deploy to EC2
-  uses: appleboy/ssh-action@v1.0.0
-  with:
-    host: ${{ secrets.EC2_HOST }}
-    username: ${{ secrets.EC2_USER }}
-    key: ${{ secrets.EC2_SSH_KEY }}
-    port: 22
-    script: |
-      cd /home/ec2-user/transport_agent
-      git pull origin main
-      sudo systemctl restart auth
-      sudo systemctl restart fleet
+name: CD - Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd /home/ec2-user/transport_agent
+            git pull origin main
+            sudo systemctl restart auth
+            sudo systemctl restart fleet
