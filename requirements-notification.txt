@@ -1,0 +1,26 @@
+# Core API
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+
+# Validation
+pydantic==2.4.2
+
+# Database (subscriptions)
+sqlalchemy[asyncio]==2.0.23
+aiomysql==0.2.0
+
+# Cache
+redis==5.0.1
+
+# Message queue
+aio-pika==9.0.5
+
+# HTTP
+httpx==0.25.1
+
+# Logging
+python-json-logger==2.0.7
+structlog==23.2.0
+
+# Utils
+python-dotenv==1.0.0
