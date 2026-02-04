@@ -50,8 +50,8 @@ class Settings(BaseSettings):
     RATE_LIMIT_PERIOD: int = int(os.getenv("RATE_LIMIT_PERIOD", "60"))
     
     # Additional fields
-    GROQ_API_KEY: str | None = os.getenv("GROQ_API_KEY", None)
-    WEATHER_API_KEY: str | None = os.getenv("WEATHER_API_KEY", None)
+   # GROQ_API_KEY: str | None = os.getenv("GROQ_API_KEY", None)
+    # WEATHER_API_KEY: str | None = os.getenv("WEATHER_API_KEY", None)
     FAISS_K: int = int(os.getenv("FAISS_K", "8"))
     EMBEDDING_MODEL: str = os.getenv("EMBEDDING_MODEL", "all-MiniLM-L6-v2")
     
