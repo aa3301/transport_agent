@@ -1,0 +1,31 @@
+# Core API
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+
+# Validation & settings
+pydantic==2.4.2
+pydantic-settings==2.0.3
+
+# Database
+sqlalchemy[asyncio]==2.0.23
+aiomysql==0.2.0
+alembic==1.12.1
+cryptography==43.0.1
+
+# Cache (OTP, sessions, rate-limit)
+redis==5.0.1
+
+# Auth & security
+pyjwt==2.10.1
+passlib[bcrypt]==1.7.4
+
+# HTTP
+httpx==0.25.1
+
+# Logging & metrics
+python-json-logger==2.0.7
+structlog==23.2.0
+prometheus-client==0.16.0
+
+# Utils
+python-dotenv==1.0.0
